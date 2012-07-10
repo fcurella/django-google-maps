@@ -4,5 +4,5 @@ include AUTHORS
 include LICENSE
 include README.rst
 
-recursive-include gmaps/templates/gmaps/templatetags/gmaps/ *.js
-recursive-include gmaps/templates/gmaps/templatetags/gmaps/ *.html
+recursive-include gmaps/templates/gmaps/templatetags/gmaps *.js
+recursive-include gmaps/templates/gmaps/templatetags/gmaps *.html
