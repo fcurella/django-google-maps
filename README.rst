@@ -13,6 +13,8 @@ Installation
 Usage
 ~~~~~
 
+::
+
     {% load gmaps %}
     <div id="mymap"></div>
 
