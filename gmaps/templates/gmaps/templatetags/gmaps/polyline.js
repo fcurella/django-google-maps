@@ -4,5 +4,5 @@ new google.maps.Polyline({
         new google.maps.LatLng({{ point.1 }}, {{ point.0 }}){% if not forloop.last %},{% endif %}
     {% endfor %}
     ]
-    {% include "quakeparser/templatetags/gmaps/kwargs.js" %}
+    {% include "gmaps/templatetags/gmaps/kwargs.js" %}
   });
