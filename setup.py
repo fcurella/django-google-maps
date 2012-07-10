@@ -19,6 +19,7 @@ setup(
     author = 'Flavio Curella',
     author_email = 'flavio.curella@gmail.com',
     packages = find_packages(exclude=['tests']),
+    include_package_data = True,
     classifiers = [
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
