@@ -7,7 +7,7 @@ Installation
 ~~~~~~~~~~~~
 
 1. Add ``GOOGLE_API_KEY`` to your settings.
-2. Add ``gmaps`` to your ``INSTALLED_APPS``.
+2. Add ``'gmaps'`` to your ``INSTALLED_APPS``.
 
 
 Usage
