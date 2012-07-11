@@ -170,7 +170,7 @@ def polygon(context, mpoly, *args):
     Given a GeoDjango mpoly fields, outputs the necessary code to generate a Polygon.
     """
     kwargs = list_to_dict(args)
-    coords = mpoly.coords[0]
+    coords = mpoly.coords
 
     context.update({
         'coords': coords,
@@ -185,7 +185,7 @@ def polyline(context, mpoly, *args):
     Given a GeoDjango mpoly fields, outputs the necessary code to generate a Polyline.
     """
     kwargs = list_to_dict(args)
-    coords = mpoly.coords[0]
+    coords = mpoly.coords
 
     context.update({
         'coords': coords,
