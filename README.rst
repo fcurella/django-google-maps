@@ -23,7 +23,7 @@ Usage
     {% map "mymap" object.location %}
         {% marker someobj.location %}
         {# all tags accept optional parameters that will be passed to the js constructor #}
-        {% marker someobj.location ["title" "'Hello, World!'"] %}
+        {% marker someobj.location "title" "'Hello, World!'" %}
         {% polygon someobj.mpoly %}
         {% polyline someobj.mpoly %}
     {% endmap %}
