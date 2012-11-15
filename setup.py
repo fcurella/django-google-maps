@@ -10,7 +10,7 @@ def read(fname):
 requirements = []
 
 setup(
-    name = "django-google-maps",
+    name = "django-gmaps",
     version = ".".join(map(str, __version__)),
     description = "",
     long_description = read('README.rst'),
