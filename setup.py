@@ -12,7 +12,7 @@ requirements = []
 setup(
     name = "django-gmaps",
     version = ".".join(map(str, __version__)),
-    description = "",
+    description = "Template tags for creating Google Maps from GeoDjango fields.",
     long_description = read('README.rst'),
     url = 'https://github.com/fcurella/django-google-maps',
     license = 'MIT',
