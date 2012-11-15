@@ -14,7 +14,7 @@ setup(
     version = ".".join(map(str, __version__)),
     description = "",
     long_description = read('README.rst'),
-    url = '',
+    url = 'https://github.com/fcurella/django-google-maps',
     license = 'MIT',
     author = 'Flavio Curella',
     author_email = 'flavio.curella@gmail.com',
