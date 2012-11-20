@@ -1,7 +1,7 @@
 """
 {% load gmaps %}
 
-{% gmap_js [<sensor>] %}
+{% gmap_js ["sensor"] ["osm"] %}
 
 {% map <element_id> <center_location> ["zoom" <zoom>] ["map_type" <type>] %}
     {% marker <location> ["title" <title>] %}
@@ -87,13 +87,14 @@ def ensure_geometry(geomtry_or_wkt):
 
 
 @register.inclusion_tag(TEMPLATE_ROOT + 'gmap_js.html')
-def gmap_js(sensor=False):
+def gmap_js(*args, **kwargs):
     api_key = getattr(settings, 'GOOGLE_API_KEY', None)
     if api_key is None:
         raise ImproperlyConfigured(u'You must define GOOGLE_API_KEY in your settings.')
 
     return {
-        'sensor': sensor,
+        'sensor': 'sensor' in args,
+        'osm': 'osm' in args,
         'GMAPS_API_KEY': api_key,
     }
 
