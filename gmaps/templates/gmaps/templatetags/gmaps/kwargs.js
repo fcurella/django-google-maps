@@ -2,4 +2,5 @@
 map: {{ map_var }}
 {% endif %}{% endif %}
 {% if kwargs %},{% endif %}
-{% for k,v in kwargs.items %}{{ k }}: {{ v|safe }}{% if not forloop.last%},{% endif %}{% endfor %}
+{% for k,v in kwargs.items %}{{ k|safe }}: {{ v|safe }}{% if not forloop.last%}, 
+{% endif %}{% endfor %}

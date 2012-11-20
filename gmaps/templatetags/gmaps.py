@@ -72,6 +72,14 @@ def list_to_dict(x):
     return dict([x[i:i + 2] for i in range(0, len(x), 2)])
 
 
+def unquote(k):
+    return k.replace('"', '').replace("'", '')
+
+
+def kwargs_to_variables(kwargs):
+    return dict([(unquote(k), template.Variable(v)) for k, v in kwargs.items()])
+
+
 def ensure_geometry(geomtry_or_wkt):
     if hasattr(geomtry_or_wkt, 'x') and hasattr(geomtry_or_wkt, 'y'):
         return geomtry_or_wkt
@@ -95,6 +103,7 @@ MAP_TYPES = {
     'roadmap': 'google.maps.MapTypeId.ROADMAP',
     'satellite': 'google.maps.MapTypeId.SATELLITE',
     'terrain': 'google.maps.MapTypeId.TERRAIN',
+    'OSM': '"OSM"'
 }
 
 
@@ -102,27 +111,25 @@ class MapNode(template.Node):
     template_name = TEMPLATE_ROOT + 'map.js'
     template_name_handler = TEMPLATE_ROOT + 'load_handler.js'
 
-    def __init__(self, nodelist, element_id, location, map_type='roadmap', zoom=13, **kwargs):
+    def __init__(self, nodelist, element_id, location, _map_type='roadmap', _zoom=13, **kwargs):
         self.nodelist = nodelist
         self.element_id = template.Variable(element_id)
         self.location = template.Variable(location)
-        self.map_type = template.Variable(map_type)
         if 'zoom' in kwargs:
-            self.zoom = template.Variable(kwargs.pop('zoom'))
+            self.zoom = kwargs.pop('zoom')
         else:
-            self.zoom = zoom
-
+            self.zoom = _zoom
         if 'map_type' in kwargs:
-            self.map_type = template.Variable(kwargs.pop('map_type'))
+            self.map_type = kwargs.pop('map_type')
         else:
-            self.map_type = map_type
+            self.map_type = _map_type
 
         if 'map_var' in kwargs:
-            self.map_var = template.Variable(kwargs.pop('map_var'))
+            self.map_var = kwargs.pop('map_var')
         else:
             self.map_var = None
 
-        self.kwargs = dict([(template.Variable(k), template.Variable(v)) for k, v in kwargs.items()])
+        self.kwargs = kwargs
 
     def render(self, context):
         location = ensure_geometry(self.location.resolve(context))
@@ -144,10 +151,9 @@ class MapNode(template.Node):
             map_type = self.map_type.resolve(context)
         else:
             map_type = self.map_type
-
         _kwargs = {}
         for k, v in self.kwargs.items():
-            _kwargs[k.resolve(context)] = v.resolve(context)
+            _kwargs[k] = v.resolve(context)
 
         ctx = copy(context)
         ctx.update({
@@ -171,7 +177,7 @@ class MapNode(template.Node):
 def map(parser, token):
     bits = token.split_contents()[1:]
     args = bits[:2]
-    kwargs = list_to_dict(bits[2:])
+    kwargs = kwargs_to_variables(list_to_dict(bits[2:]))
     nodelist = parser.parse(('endmap',))
     parser.delete_first_token()
     return MapNode(nodelist, *args, **kwargs)
